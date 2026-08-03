@@ -318,6 +318,13 @@ export interface AgentMetadata {
   // === Analytics Support ===
   analyticsAdapter?: AgentAnalyticsAdapter;  // Optional analytics adapter
 
+  /**
+   * When true, a per-session analytics JSON report is written automatically on
+   * session exit (see BaseAgentAdapter finalization). Default off; enabled on the
+   * interactive agents. A `--no-analytics-report` CLI flag disables it per run.
+   */
+  sessionAnalyticsReport?: boolean;
+
   // === Metrics Configuration ===
   /**
    * Metrics collection configuration for this agent
@@ -771,7 +778,7 @@ export interface AgentAdapter {
    * Install specific version of agent (optional, for version-managed agents)
    * @param version - Version string or channel ('latest', 'stable', 'supported')
    */
-  installVersion?(version: string): Promise<void>;
+  installVersion?(version: string): Promise<string | null>;
 
   /**
    * Check version compatibility (optional, for version-managed agents)
